@@ -183,7 +183,36 @@
 
     // 👉 CHALLENGE 5
     function normalizePhoneNumber(number) {
-      let phoneNum = []
+      let template = '(XXX) XXX-XXXX';
+      let tempArr = template.split('');
+      let numArr = number.split('');
+      let result = [];
+      if (numArr.length !== 10) {
+        return 'type a 10-digit number'
+      }
+      for (i = 0; i <= numArr.length; i++) {
+        let num = numArr[i];
+        if (isNaN(parseInt(num))) {
+          if (num === '(' || num === ')' || num === '-' || num === undefined) {
+            continue;
+          }
+          return 'invalid phone number';
+        }
+      }
+      for (let i = tempArr.length-1; i >= 0; i--) {
+        let digit = tempArr[i];
+        if (digit === 'X') {
+          let digitX = numArr.pop();
+          if (!isNaN(parseInt(digitX))) {
+            result.unshift(digitX);
+          } else {
+            result.unshift(digit);
+          }
+        } else {
+          result.unshift(digit);
+        }
+      }
+      return result.join('')
       // 🧠 normalizePhoneNumber takes a string as its only argument, representing a ten-digit number
       // The function returns a string formatted as seen below
       // 🧠 Examples of usage:
@@ -199,6 +228,17 @@
 
     // 👉 CHALLENGE 6 (bonus, NOT graded)
     function diceRolls() {
+      let count = 0;
+      let threeInARow = 0;
+      while (true) {
+        let roll = Math.ceil(Math.random() * 6);
+        if (roll === 6) {
+          threeInARow++
+        } else {
+          threeInARow = 0
+        }
+        return count
+      }
       // 🧠 diceRolls takes no arguments and returns a number
       // The function throws a six-sided dice until 3 sixes in a row are obtained
       // The number of throws it took to obtain that third-in-a-row six is then returned from the function
@@ -206,6 +246,8 @@
       // 🌟 HINT: use `while(true)` to throw the dice indefinitely, but avoid an infinite loop by making sure to break out eventually
       // 🌟 HINT: you need to keep track of the total number of throws, as well as how many sixes in a row
     }
+
+    diceRolls()
 
     // 🧪 TESTS, do not make any changes below this line ===================
     // 🧪 TESTS, do not make any changes below this line ===================
